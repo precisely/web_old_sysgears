@@ -1,0 +1,17 @@
+#import "./ReportInfo.graphql"
+
+query dashboard($limit: Int!, $after: Int, $userId: Int) {
+  reports(limit: $limit, after: $after, user: $userId) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ReportInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

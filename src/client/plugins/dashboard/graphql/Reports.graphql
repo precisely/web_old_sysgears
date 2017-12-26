@@ -1,0 +1,17 @@
+#import "./Report.graphql"
+
+query reports($limit: Int!, $after: Int) {
+  reports(limit: $limit, after: $after) {
+    totalCount
+    edges {
+      cursor
+      node {
+        ...ReportInfo
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

@@ -1,5 +1,5 @@
 export default {
-  name: 'Apollo Starter Kit',
+  name: 'Precise.ly',
   logging: {
     debugSQL: false,
     apolloLogging: false

@@ -17,7 +17,7 @@ import { SubscriptionClient } from 'subscriptions-transport-ws';
 import ReactGA from 'react-ga';
 import url from 'url';
 
-import RedBox from './RedBox';
+import ErrorBox from './ErrorBox';
 import createApolloClient from '../../common/createApolloClient';
 import createReduxStore, { storeReducer } from '../../common/createReduxStore';
 import settings from '../../../settings';
@@ -174,7 +174,7 @@ export default class Main extends React.Component {
 
   render() {
     return this.state.error ? (
-      <RedBox error={this.state.error} />
+      <ErrorBox error={this.state.error} />
     ) : (
       plugins.getWrappedRoot(
         <Provider store={store}>

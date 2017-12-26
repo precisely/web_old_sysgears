@@ -7,7 +7,7 @@ import settings from '../../../settings';
 const format = (fmt, ...args) =>
   fmt.replace(/{(\d+)}/g, (match, number) => (typeof args[number] != 'undefined' ? args[number] : match));
 
-export default class RedBox extends React.Component {
+export default class ErrorBox extends React.Component {
   static propTypes = {
     error: PropTypes.instanceOf(Error).isRequired
   };
@@ -58,7 +58,7 @@ export default class RedBox extends React.Component {
   render() {
     const error = this.props.error;
 
-    const { redbox, message, stack, frame } = styles;
+    const { errorbox, message, stack, frame } = styles;
 
     let frames;
     let parseError;
@@ -86,7 +86,7 @@ export default class RedBox extends React.Component {
     }
 
     return (
-      <div style={redbox}>
+      <div style={errorbox}>
         <div style={message}>
           {error.name}: {error.message}
         </div>
@@ -97,7 +97,7 @@ export default class RedBox extends React.Component {
 }
 
 const styles = {
-  redbox: {
+  errorbox: {
     boxSizing: 'border-box',
     fontFamily: 'sans-serif',
     position: 'fixed',
