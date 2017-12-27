@@ -34,7 +34,7 @@ const LoginWithApollo = compose(
           localStorage.setItem('refreshToken', refreshToken);
 
           if (history) {
-            return history.push('/profile');
+            return history.push('/');
           }
           if (navigation) {
             return navigation.goBack();

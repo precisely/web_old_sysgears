@@ -49,7 +49,7 @@
   "plugins": [
     "react",
     "json",
-    "prettier",
-    "flowtype"
+    "flowtype",
+    "prettier"
   ]
 }

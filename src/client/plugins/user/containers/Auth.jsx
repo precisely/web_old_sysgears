@@ -69,6 +69,10 @@ const profileName = cookies => {
   }
 };
 
+const UnauthNav = withCookies(({ children, cookies, scope }) => {
+  return checkAuth(cookies, scope) ? null : children;
+});
+
 const AuthNav = withCookies(({ children, cookies, scope }) => {
   return checkAuth(cookies, scope) ? children : null;
 });
@@ -160,13 +164,23 @@ AuthLoggedIn.propTypes = {
   to: PropTypes.string
 };
 
-const AuthRoute = withCookies(({ component: Component, cookies, scope, ...rest }) => {
+const UnauthRoute = withCookies(({ component: Component, cookies, scope, ...rest }) => {
+  return <Route {...rest} render={props => (checkAuth(cookies, scope) ? null : <Component {...props} />)} />;
+});
+
+const AuthRoute = withCookies(({ component: Component, unauthComponent: UnauthComponent, cookies, scope, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={props =>
-        checkAuth(cookies, scope) ? <Component {...props} /> : <Redirect to={{ pathname: '/login' }} />
-      }
+      render={props => {
+        if (checkAuth(cookies, scope)) {
+          return <Component {...props} />;
+        } else if (UnauthComponent) {
+          return <UnauthComponent {...props} />;
+        } else {
+          return <Redirect to={{ pathname: '/login' }} />;
+        }
+      }}
     />
   );
 });
@@ -194,9 +208,9 @@ AuthLoggedInRoute.propTypes = {
   scope: PropTypes.string
 };
 
-export { AuthNav };
+export { UnauthNav, AuthNav };
 export { AuthLoggedIn };
 export { AuthLoginWithApollo as AuthLogin };
 export { AuthProfile };
-export { AuthRoute };
+export { UnauthRoute, AuthRoute };
 export { AuthLoggedInRoute };
