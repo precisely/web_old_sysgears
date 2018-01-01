@@ -9,7 +9,7 @@ import log from '../../../../common/log';
 import CURRENT_USER_QUERY from '../graphql/CurrentUserQuery.graphql';
 import LOGOUT from '../graphql/Logout.graphql';
 
-const checkAuth = (cookies, scope) => {
+const checkAuth = (cookies, scope, userId) => {
   let token = null;
   let refreshToken = null;
 
@@ -168,22 +168,24 @@ const UnauthRoute = withCookies(({ component: Component, cookies, scope, ...rest
   return <Route {...rest} render={props => (checkAuth(cookies, scope) ? null : <Component {...props} />)} />;
 });
 
-const AuthRoute = withCookies(({ component: Component, unauthComponent: UnauthComponent, cookies, scope, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={props => {
-        if (checkAuth(cookies, scope)) {
-          return <Component {...props} />;
-        } else if (UnauthComponent) {
-          return <UnauthComponent {...props} />;
-        } else {
-          return <Redirect to={{ pathname: '/login' }} />;
-        }
-      }}
-    />
-  );
-});
+const AuthRoute = withCookies(
+  ({ component: Component, loggedOutComponent: LoggedOutComponent, test, cookies, scope, ...rest }) => {
+    return (
+      <Route
+        {...rest}
+        render={props => {
+          if (checkAuth(cookies, scope) && !test || ) {
+            return <Component {...props} />;
+          } else if (UnauthComponent) {
+            return <LoggedOutComponent {...props} />;
+          } else {
+            return <Redirect to={{ pathname: '/login' }} />;
+          }
+        }}
+      />
+    );
+  }
+);
 
 AuthRoute.propTypes = {
   component: PropTypes.func,

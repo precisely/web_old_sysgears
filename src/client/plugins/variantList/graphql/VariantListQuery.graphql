@@ -1,0 +1,8 @@
+# GraphQL queries
+query variants($user: int, $) {
+  user {
+    variants {
+
+    }
+  }
+}

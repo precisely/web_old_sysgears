@@ -14,7 +14,7 @@ import reducers from './reducers';
 // });
 
 export default new Plugin({
-  route: <AuthRoute exact path="/" component={Dashboard} unauthComponent={Home} />,
+  route: <AuthRoute exact path="/" component={Dashboard} loggedOutComponent={Home} />,
   navItem: (
     <MenuItem key="dashboard">
       <AuthNav>
